@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>幻隐图two</title>
+	<link rel="icon" href="data:image/ico;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwJW+XgyqCtAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9FDxTx0HF/z8UPlYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcyZynZMwkcoAAAAAAAAAAAAAAAAAAAAATRpManQlc58AAAAAAAAAAAAAAAAAAAAAPhQ+Vn0oe6wAAAAAAAAAAG0kbZaSMZLLAAAAAAAAAAAAAAAAAAAAACUMJTQ5EzhOAAAAAAAAAAAAAAAAAAAAAB8KHys+FD5VAAAAAAAAAABJGElksTmv8wQBBAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAgYIcNAwP88FDtUAAAAAE0ZTGkKAwoOAAAAACkOKTkIAwgKAAAAABQHFBs7EzpQAAAAACAKHyxDFkJcAAAAAAAAAABrI2mTwD+++zcSNky4Pbb+RBZEXhwJGyfBP77/GwkbJgAAAAArDis7y0LJ/x4KHSp1JnOgmzOZ1AAAAAAAAAAAAgECAoAqf6pmIWSLZiFkjKE1oNyLLoi6kjCQyAEAAQEAAAAAAAAAAIotiLyjNqLasTqw8k4aTWsAAAAAAAAAAAAAAAAAAAAAAAAAAA8FDxW3O7X41UbS/y0PLT4AAAAAAAAAAAAAAAAZCBkiw0DB/6Y2peMJAwkNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALQ8tP00ZTGoAAAAAAAAAAAAAAAAAAAAAAAAAACUMJTQXCBcgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AACf/wAAH/8AADzzAAA88wAAH/8AABJJAACAQQAAgGEAAPDhAAD58wAA//8AAP//AAD//wAA//8AAA==">
+	<style>
+		.mask {
+			position: fixed;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.2);
+			display: none;
+		}
+		.mask > h2 {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin: 0;
+			background-color: aliceblue;
+		}
+	
+		.flex {
+			display: flex;
+			flex-wrap: wrap;
+		}
+	</style>
+</head>
+<body>
+	<div class="mask">
+		<h2 id="maskContent"></h2>
+	</div>
+	<div class="flex">
+		<details open>
+			<summary>编码</summary>
+			<button id="startEncode">开始编码</button>
+			<div class="flex">
+				<section>
+					<h2>表图</h2>
+					<input type="file" multiple id="outerImagesInput" autocomplete="off">
+				</section>
+				<section>
+					<h2>里文件</h2>
+					<input type="file" id="innerFileInput" autocomplete="off">
+				</section>
+				<section>
+					<h2>加密</h2>
+					<input spellcheck="false" placeholder="密码" id="encodekey">
+				</section>
+				<section>
+					<h2>水印</h2>
+					<div>
+						<input type="checkbox" id="iconWatermarkCheck" checked>
+						<label for="iconWatermarkCheck">右上角图标</label>
+						<img id="hyttIco" src="data:image/ico;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwJW+XgyqCtAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9FDxTx0HF/z8UPlYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcyZynZMwkcoAAAAAAAAAAAAAAAAAAAAATRpManQlc58AAAAAAAAAAAAAAAAAAAAAPhQ+Vn0oe6wAAAAAAAAAAG0kbZaSMZLLAAAAAAAAAAAAAAAAAAAAACUMJTQ5EzhOAAAAAAAAAAAAAAAAAAAAAB8KHys+FD5VAAAAAAAAAABJGElksTmv8wQBBAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAgYIcNAwP88FDtUAAAAAE0ZTGkKAwoOAAAAACkOKTkIAwgKAAAAABQHFBs7EzpQAAAAACAKHyxDFkJcAAAAAAAAAABrI2mTwD+++zcSNky4Pbb+RBZEXhwJGyfBP77/GwkbJgAAAAArDis7y0LJ/x4KHSp1JnOgmzOZ1AAAAAAAAAAAAgECAoAqf6pmIWSLZiFkjKE1oNyLLoi6kjCQyAEAAQEAAAAAAAAAAIotiLyjNqLasTqw8k4aTWsAAAAAAAAAAAAAAAAAAAAAAAAAAA8FDxW3O7X41UbS/y0PLT4AAAAAAAAAAAAAAAAZCBkiw0DB/6Y2peMJAwkNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALQ8tP00ZTGoAAAAAAAAAAAAAAAAAAAAAAAAAACUMJTQXCBcgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AACf/wAAH/8AADzzAAA88wAAH/8AABJJAACAQQAAgGEAAPDhAAD58wAA//8AAP//AAD//wAA//8AAA==">
+					</div>
+					<div>
+						<input id="textWatermark" placeholder="左下角文字">
+					</div>
+				</section>
+				<section>
+					<h2>限制</h2>
+					<div>
+						<input id="lessThanCheck" type="checkbox" checked>
+						<label for="lessThanCheck">密图不要超过</label>
+						<input type="number" min="1" value="9" id="lessThan">
+						<select id="lessThanBase">
+							<option value="1">B</option>
+							<option value="1024">K</option>
+							<option value="1048576" selected>M</option>
+							<option value="1073741824">G</option>
+						</select>
+					</div>
+					<div>
+						<input id="hasTimesLimit" type="checkbox" checked>
+						<label for="hasTimesLimit">
+							密图不要超过表图
+							<input id="timesLimit" type="number" min="2" value="100">
+							倍
+						</label>
+					</div>
+					<div>
+						<label for="smaller">比上述限制随机再小一些</label>
+						<input id="smaller" type="range" min="1" max="5" value="1">
+					</div>
+				</section>
+			</div>
+		</details>
+		<details open>
+			<summary>解码</summary>
+			<button id="startDecode">开始解码</button>
+			<div class="flex">
+				<section>
+					<h2>密图</h2>
+					<input type="file" multiple id="cipheredImagesInput" autocomplete="off">
+				</section>
+				<section>
+					<h2>解密</h2>
+					<input spellcheck="false" placeholder="密码" id="decodekey">
+				</section>
+			</div>
+		</details>
+	</div>
+	
+	<script>
+	// void fourBytesToUint32(const char * x, size_t i) { return *(const uint32_t *)(x + i); }
+	// void Uint32ToFourBytes(const char * x, size_t i, uint32_t t) { strncpy(x + i, (const char *)&t, 4); }
+		function fourBytesToUint32(x, i) {
+			return x[i] << 24 | (x[i + 1] << 16) | (x[i + 2] << 8) | x[i + 3]
+		}
+		function Uint32ToFourBytes(x, i, t) {
+			x[i] = t >> 24
+			x[i + 1] = (t >> 16) & 255
+			x[i + 2] = (t >> 8) & 255
+			x[i + 3] = t & 255
+		}
+		function Uint64ToEightBytes(x, i, t) {
+			Uint32ToFourBytes(x, i, t >> 32)
+			Uint32ToFourBytes(x, i + 4, t & 0xFFFFFFFF)
+		}
+	</script>
+	<script>
+	// 逻辑左移/右移
+		function ROTL(a, b) {
+			return (a << b) | (a >> (32 - b))
+		}
+		function ROTR(a, b) {
+			return (a >> b) | (a << (32 - b))
+		}
+	</script>
+	<script>
+	// ChaCha20（用于数据加解密） 见https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant
+		(function() {
+			function QR(x, a, b, c, d) {
+				x[a] += x[b], x[d] = ROTL(x[d] ^ x[a], 16)
+				x[c] += x[d], x[b] = ROTL(x[b] ^ x[c], 12)
+				x[a] += x[b], x[d] = ROTL(x[d] ^ x[a], 8)
+				x[c] += x[d], x[b] = ROTL(x[b] ^ x[c], 7)
+			}
+			ChaCha20 = function(key/*32字节*/, nonce/*12字节*/, data, result/*长度与data相同*/) {
+				var data_size = data.length
+				
+				var in_ = new Uint32Array(16)
+				in_[0] = 1634760805
+				in_[1] = 857760878
+				in_[2] = 2036477234
+				in_[3] = 1797285236
+				in_[4] = fourBytesToUint32(key, 0)
+				in_[5] = fourBytesToUint32(key, 4)
+				in_[6] = fourBytesToUint32(key, 8)
+				in_[7] = fourBytesToUint32(key, 12)
+				in_[8] = fourBytesToUint32(key, 16)
+				in_[9] = fourBytesToUint32(key, 20)
+				in_[10] = fourBytesToUint32(key, 24)
+				in_[11] = fourBytesToUint32(key, 28)
+				in_[12] = 0 // counter
+				in_[13] = fourBytesToUint32(nonce, 0)
+				in_[14] = fourBytesToUint32(nonce, 4)
+				in_[15] = fourBytesToUint32(nonce, 8)
+				
+				var x = new Uint32Array(16)
+				var out = new Uint8Array(64)
+				
+				var j = 0
+				for (; ; ) {
+					for (var i = 0; i < 16; ++ i) {
+						x[i] = in_[i]
+					}
+					
+					for (var i = 0; i < 20; i += 2) {
+						QR(x, 0, 4, 8, 12)
+						QR(x, 1, 5, 9, 13)
+						QR(x, 2, 6, 10, 14)
+						QR(x, 3, 7, 11, 15)
+						
+						QR(x, 0, 5, 10, 15)
+						QR(x, 1, 6, 11, 12)
+						QR(x, 2, 7, 8, 13)
+						QR(x, 3, 4, 9, 14)
+					}
+					for (var i = 0; i < 16; ++ i) {
+						Uint32ToFourBytes(out, i << 2, x[i] + in_[i])
+					}
+					
+					if (data_size - j <= 64) {
+						for (var i = 0; j < data_size; ++ i, ++ j) {
+							result[j] = data[j] ^ out[i]
+						}
+						return
+					}
+					for (var i = 0; i < 64; ++ i, ++ j) {
+						result[j] = data[j] ^ out[i]
+					}
+					
+					++ in_[12] // counter ++
+				}
+			}
+		})()
+	</script>
+	<script>
+		(function() {
+			var seeds = new Uint8Array(32)
+			for (var j = 0; j < 32; ++ j) {
+				seeds[j] = (j << 1) + 123
+			}
+			hash = function(message) {
+				var hashes = new Uint8Array(32)
+				for (var i = 0; i < message.length; ++ i) {
+					for (var j = 0; j < 32; ++ j) {
+						hashes[j] = (hashes[j] * seeds[j] + message[i]) & 0xFFFFFFFF
+					}
+				}
+				return hashes
+			}
+		})()
+	</script>
+	<script>
+	// 加解密
+		(function() {
+			var nonce = new TextEncoder().encode('幻隐图two')
+			translate = function(textkey, data, result) {
+				ChaCha20(hash(new TextEncoder().encode(textkey)), nonce, data, result)
+			}
+		})()
+	</script>
+	
+	<script>
+	// CRC32（用于png块的校验） 见https://en.wikipedia.org/wiki/Cyclic_redundancy_check#CRC-32_algorithm
+		(function() {
+			var table = [0x00000000,0x77073096,0xEE0E612C,0x990951BA,0x076DC419,0x706AF48F,0xE963A535,0x9E6495A3,0x0EDB8832,0x79DCB8A4,0xE0D5E91E,0x97D2D988,0x09B64C2B,0x7EB17CBD,0xE7B82D07,0x90BF1D91,0x1DB71064,0x6AB020F2,0xF3B97148,0x84BE41DE,0x1ADAD47D,0x6DDDE4EB,0xF4D4B551,0x83D385C7,0x136C9856,0x646BA8C0,0xFD62F97A,0x8A65C9EC,0x14015C4F,0x63066CD9,0xFA0F3D63,0x8D080DF5,0x3B6E20C8,0x4C69105E,0xD56041E4,0xA2677172,0x3C03E4D1,0x4B04D447,0xD20D85FD,0xA50AB56B,0x35B5A8FA,0x42B2986C,0xDBBBC9D6,0xACBCF940,0x32D86CE3,0x45DF5C75,0xDCD60DCF,0xABD13D59,0x26D930AC,0x51DE003A,0xC8D75180,0xBFD06116,0x21B4F4B5,0x56B3C423,0xCFBA9599,0xB8BDA50F,0x2802B89E,0x5F058808,0xC60CD9B2,0xB10BE924,0x2F6F7C87,0x58684C11,0xC1611DAB,0xB6662D3D,0x76DC4190,0x01DB7106,0x98D220BC,0xEFD5102A,0x71B18589,0x06B6B51F,0x9FBFE4A5,0xE8B8D433,0x7807C9A2,0x0F00F934,0x9609A88E,0xE10E9818,0x7F6A0DBB,0x086D3D2D,0x91646C97,0xE6635C01,0x6B6B51F4,0x1C6C6162,0x856530D8,0xF262004E,0x6C0695ED,0x1B01A57B,0x8208F4C1,0xF50FC457,0x65B0D9C6,0x12B7E950,0x8BBEB8EA,0xFCB9887C,0x62DD1DDF,0x15DA2D49,0x8CD37CF3,0xFBD44C65,0x4DB26158,0x3AB551CE,0xA3BC0074,0xD4BB30E2,0x4ADFA541,0x3DD895D7,0xA4D1C46D,0xD3D6F4FB,0x4369E96A,0x346ED9FC,0xAD678846,0xDA60B8D0,0x44042D73,0x33031DE5,0xAA0A4C5F,0xDD0D7CC9,0x5005713C,0x270241AA,0xBE0B1010,0xC90C2086,0x5768B525,0x206F85B3,0xB966D409,0xCE61E49F,0x5EDEF90E,0x29D9C998,0xB0D09822,0xC7D7A8B4,0x59B33D17,0x2EB40D81,0xB7BD5C3B,0xC0BA6CAD,0xEDB88320,0x9ABFB3B6,0x03B6E20C,0x74B1D29A,0xEAD54739,0x9DD277AF,0x04DB2615,0x73DC1683,0xE3630B12,0x94643B84,0x0D6D6A3E,0x7A6A5AA8,0xE40ECF0B,0x9309FF9D,0x0A00AE27,0x7D079EB1,0xF00F9344,0x8708A3D2,0x1E01F268,0x6906C2FE,0xF762575D,0x806567CB,0x196C3671,0x6E6B06E7,0xFED41B76,0x89D32BE0,0x10DA7A5A,0x67DD4ACC,0xF9B9DF6F,0x8EBEEFF9,0x17B7BE43,0x60B08ED5,0xD6D6A3E8,0xA1D1937E,0x38D8C2C4,0x4FDFF252,0xD1BB67F1,0xA6BC5767,0x3FB506DD,0x48B2364B,0xD80D2BDA,0xAF0A1B4C,0x36034AF6,0x41047A60,0xDF60EFC3,0xA867DF55,0x316E8EEF,0x4669BE79,0xCB61B38C,0xBC66831A,0x256FD2A0,0x5268E236,0xCC0C7795,0xBB0B4703,0x220216B9,0x5505262F,0xC5BA3BBE,0xB2BD0B28,0x2BB45A92,0x5CB36A04,0xC2D7FFA7,0xB5D0CF31,0x2CD99E8B,0x5BDEAE1D,0x9B64C2B0,0xEC63F226,0x756AA39C,0x026D930A,0x9C0906A9,0xEB0E363F,0x72076785,0x05005713,0x95BF4A82,0xE2B87A14,0x7BB12BAE,0x0CB61B38,0x92D28E9B,0xE5D5BE0D,0x7CDCEFB7,0x0BDBDF21,0x86D3D2D4,0xF1D4E242,0x68DDB3F8,0x1FDA836E,0x81BE16CD,0xF6B9265B,0x6FB077E1,0x18B74777,0x88085AE6,0xFF0F6A70,0x66063BCA,0x11010B5C,0x8F659EFF,0xF862AE69,0x616BFFD3,0x166CCF45,0xA00AE278,0xD70DD2EE,0x4E048354,0x3903B3C2,0xA7672661,0xD06016F7,0x4969474D,0x3E6E77DB,0xAED16A4A,0xD9D65ADC,0x40DF0B66,0x37D83BF0,0xA9BCAE53,0xDEBB9EC5,0x47B2CF7F,0x30B5FFE9,0xBDBDF21C,0xCABAC28A,0x53B39330,0x24B4A3A6,0xBAD03605,0xCDD70693,0x54DE5729,0x23D967BF,0xB3667A2E,0xC4614AB8,0x5D681B02,0x2A6F2B94,0xB40BBE37,0xC30C8EA1,0x5A05DF1B,0x2D02EF8D]
+			CRC32 = function(data) {
+				var crc = 0xFFFFFFFF
+				for (var i = 0; i < data.length; ++ i) {
+					crc = (crc >> 8) ^ table[(crc ^ data[i]) & 255]
+				}
+				return crc ^ 0xFFFFFFFF
+			}
+		})()
+	</script>
+	<script>
+	// 幻隐图two核心代码
+		(function () {
+			function chunk_name_is(png, p, chunk_name) {
+				return png[p + 4] == chunk_name.charCodeAt(0) && png[p + 5] == chunk_name.charCodeAt(1) && png[p + 6] == chunk_name.charCodeAt(2) && png[p + 7] == chunk_name.charCodeAt(3)
+			}
+			function find_end_of_last_chunk(png, chunk_name) {
+				var p = 8
+				var f
+				while (p < png.length) {
+					if (chunk_name_is(png, p, chunk_name)) {
+						f = p
+					}
+					p += fourBytesToUint32(png, p) + 12
+				}
+				return f + fourBytesToUint32(png, f) + 12
+			}
+			function write_chunk_name(png, p, chunk_name) {
+				png[p] = chunk_name.charCodeAt(0)
+				png[p + 1] = chunk_name.charCodeAt(1)
+				png[p + 2] = chunk_name.charCodeAt(2)
+				png[p + 3] = chunk_name.charCodeAt(3)
+			}
+			hytt = {
+				encode: function(pngs, data, smaller) {
+					var results = []
+					var i = 0, j = 0
+
+					while (i < data.length) {
+						var png_id = Math.floor(Math.random() * pngs.length)
+						var cur_png = pngs[png_id]
+						var png = cur_png.png
+						
+						var cur_data_size = cur_png.limit
+						if (i + cur_data_size <= data.length) {
+							cur_data_size = smaller(cur_data_size)
+						}
+						cur_data_size = Math.min(cur_data_size, data.length - i)
+						
+						var result = new Uint8Array(cur_data_size + png.length + 16)
+						
+						var p = find_end_of_last_chunk(png, 'IDAT')
+						
+						// 结果图为 png.substr(0, p) + png块长度(4 字节) + png块名(4 字节) + j(4 字节) + 数据块 + crc32(4 字节) + png.substr(p)
+						
+						for (var k = 0; k < p; ++ k) {
+							result[k] = png[k]
+						}
+						
+						var chunk_size = cur_data_size + 4
+						Uint32ToFourBytes(result, p, chunk_size)
+						
+						write_chunk_name(result, p + 4, 'zTXt')
+						
+						Uint32ToFourBytes(result, p + 8, j)
+						
+						for (var k = 0; k < cur_data_size; ++ k) {
+							result[p + 12 + k] = data[i + k]
+						}
+						
+						Uint32ToFourBytes(result, p + 12 + cur_data_size, CRC32(new Uint8Array(result.buffer, p + 8)))
+						
+						while (p < png.length) {
+							result[p + 16 + cur_data_size] = png[p]
+							++ p
+						}
+						
+						i += cur_data_size
+						++ j
+						
+						results.push({
+							png: result,
+							id: png_id
+						})
+					}
+					return results
+				},
+				decode: function(pngs) {
+					var result_indexes = {}
+					var size = 0
+					
+					var result_size = 0
+					var result_num = 0
+					var records = new Array(pngs.length)
+					
+					for (var j = 0; j < pngs.length; ++ j) {
+						var png = pngs[j]
+						var p = find_end_of_last_chunk(png, 'IDAT')
+						if (!p || !chunk_name_is(png, p, 'zTXt')) {
+							return
+						}
+						
+						var data_size = fourBytesToUint32(png, p) - 4
+						var id = fourBytesToUint32(png, p + 8)
+						
+						records[j] = {
+							data_size: data_size,
+							p: p
+						}
+						
+						result_indexes[id] = j
+						if (id >= result_num) {
+							result_num = id + 1
+						}
+						result_size += data_size
+						++ size
+					}
+					
+					if (result_num != size || result_num != pngs.length) {
+						return
+					}
+					
+					var final_result = new Uint8Array(result_size)
+					var offset = 0
+					for (var i = 0; i < result_num; ++ i) {
+						var j = result_indexes[i]
+						var rc = records[j]
+						for (var k = 0; k < rc.data_size; ++ k) {
+							final_result[offset + k] = pngs[j][rc.p + 12 + k]
+						}
+						offset += rc.data_size
+					}
+					
+					return final_result
+				}
+			}
+		})()
+	</script>
+	
+	<script>
+		(function() {
+			var c = document.querySelector('.mask'), d = document.getElementById('maskContent')
+			mask = {
+				show: function(text) {
+					d.innerText = text
+					c.style.display = 'block'
+				},
+				hide: function() {
+					c.style.display = 'none'
+				}					
+			}
+		})()
+	</script>
+	<script>
+		(function() {
+			var hyttIco = document.getElementById('hyttIco')
+			document.getElementById('startEncode').onclick = function() {
+				var images = document.getElementById('outerImagesInput').files
+				if (images.length == 0) {
+					alert('请选择至少一张表图')
+					return
+				}
+				
+				var files = document.getElementById('innerFileInput').files
+				if (files.length == 0) {
+					alert('请选择一个里文件')
+					return
+				}
+				var file = files[0]
+				
+				mask.show('正在编码')
+				
+				var pngs = []
+				
+				var hasIconWatermark = document.getElementById('iconWatermarkCheck').checked
+				var textWatermark = document.getElementById('textWatermark').value
+				
+				var lessThan = 4294967279
+				if (document.getElementById('lessThanCheck').checked) {
+					lessThan = Math.min(document.getElementById('lessThan').value * document.getElementById('lessThanBase').value, lessThan)
+				}
+				var hasTimesLimit = document.getElementById('hasTimesLimit').checked
+				var timesLimit = document.getElementById('timesLimit').value
+				
+				new Promise((resolve, reject) => {
+					for (var i of images) {
+						var img = document.createElement('img')
+						img.src = URL.createObjectURL(i)
+						
+						img.onload = () => {
+							var canvas = document.createElement('canvas')
+							canvas.width = img.width
+							canvas.height = img.height
+							var ctx = canvas.getContext('2d')
+										
+							ctx.drawImage(img, 0, 0)
+							
+							if (hasIconWatermark) {
+								ctx.drawImage(hyttIco, img.width - hyttIco.width, 0)
+							}
+							ctx.fillText(textWatermark, 0, img.height - 25)
+							
+							canvas.toBlob(blob => {
+								blob.arrayBuffer().then(buffer => {
+									var true_limit = hasTimesLimit ? Math.min(buffer.byteLength * (timesLimit - 1) - 16, lessThan) : lessThan
+									if (true_limit <= 0) {
+										reject('限制太过以至于存在无法写入里数据的表图')
+										return
+									}
+									pngs.push({
+										png: new Uint8Array(buffer),
+										limit: true_limit
+									})
+									if (pngs.length == images.length) {
+										resolve()
+									}
+								})
+							})
+						}
+						
+						img.onerror = () => {
+							reject('图片读取错误')
+						}
+					}
+				}).then(() => {
+					var reader = new FileReader()
+					reader.onload = e => {
+						var content = new Uint8Array(e.target.result)
+						var mime = new TextEncoder().encode(file.type)
+						var name = new TextEncoder().encode(file.name)
+						
+						// mime-size(4字节) + mime + name-size(4字节) + name + ar
+						var data = new Uint8Array(8 + mime.length + name.length + content.length)
+						
+						Uint32ToFourBytes(data, 0, mime.length)
+						for (var j = 0; j < mime.length; ++ j) {
+							data[4 + j] = mime[j]
+						}
+						
+						Uint32ToFourBytes(data, 4 + mime.length, name.length)
+						for (var j = 0; j < name.length; ++ j) {
+							data[8 + mime.length + j] = name[j]
+						}
+						
+						for (var j = 0; j < content.length; ++ j) {
+							data[8 + mime.length + name.length + j] = content[j]
+						}
+						
+						var translated = new Uint8Array(8 + mime.length + name.length + content.length)
+						translate(document.getElementById('encodekey').value, data, translated)
+						
+						var smallerRange = document.getElementById('smaller')
+						var smaller = Math.floor(smallerRange.value / Number(smallerRange.max)) * 10
+						
+						var results = hytt.encode(pngs, translated, x => {
+							var m = 10
+							for (var i = 0; i < smaller; ++ i) {
+								m = Math.min(m, Math.floor(Math.random() * 10))
+							}
+							var k = 0
+							for (var i = 0; i < m; ++ i) {
+								k = Math.max(k, Math.floor(Math.random() * x))
+							}
+							return k + 1
+						})
+							
+						var a = document.createElement('a')
+						for (var i in results) {
+							a.href = URL.createObjectURL(new Blob([results[i].png], {type: "image/png"}))
+							var raw_name = images[results[i].id].name
+							a.download = raw_name.substring(0, raw_name.lastIndexOf('.') - 1) + i + '.png'
+							a.click()
+						}
+						
+						mask.hide()
+					}
+					reader.onerror = () => {
+						alert('文件读取错误')
+						mask.hide()
+						return
+					}
+					reader.readAsArrayBuffer(file)
+				}, e => {
+					alert(e)
+					mask.hide()
+				})
+			}
+			document.getElementById('startDecode').onclick = () => {
+				var images = document.getElementById('cipheredImagesInput').files
+				if (images.length == 0) {
+					alert('请选择密图')
+					return
+				}
+				
+				mask.show('正在解码')
+				
+				var pngs = []
+				new Promise((resolve, reject) => {
+					for (var i of images) {
+						var reader = new FileReader()
+						reader.onload = e => {
+							pngs.push(new Uint8Array(e.target.result))
+							if (pngs.length == images.length) {
+								resolve()
+							}
+						}
+						reader.onerror = () => {
+							reject('文件读取错误')
+						}
+						reader.readAsArrayBuffer(i)
+					}
+				}).then(() => {
+					var result = hytt.decode(pngs)
+					if (!result) {
+						alert('密图错误')
+						mask.hide()
+						return
+					}
+					
+					var translated = new Uint8Array(result.length)
+					translate(document.getElementById('decodekey').value, result, translated)
+					
+					try {
+						var mime_size = fourBytesToUint32(translated, 0)
+						var name_size = fourBytesToUint32(translated, 4 + mime_size)
+						
+						var a = document.createElement('a')
+						a.download = new TextDecoder().decode(new Uint8Array(translated.buffer, 8 + mime_size, name_size))
+						a.href = URL.createObjectURL(new Blob([new Uint8Array(translated.buffer, 8 + mime_size + name_size)], {
+							type: new TextDecoder().decode(new Uint8Array(translated.buffer, 4, mime_size))
+						}))
+						a.click()
+					} catch(e) {
+						alert('密码错误')
+					}
+					
+					mask.hide()
+				}, e => {
+					alert(e)
+					mask.hide()
+				})
+			}
+		})()
+	</script>
+</body>
+</html>
