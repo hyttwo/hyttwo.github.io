@@ -209,13 +209,13 @@
 		(function() {
 			var seeds = new Uint8Array(32)
 			for (var j = 0; j < 32; ++ j) {
-				seeds[j] = (j << 1) + 123
+				seeds[j] = (j << 1) + 23
 			}
 			hash = function(message) {
 				var hashes = new Uint8Array(32)
 				for (var i = 0; i < message.length; ++ i) {
 					for (var j = 0; j < 32; ++ j) {
-						hashes[j] = (hashes[j] * seeds[j] + message[i]) & 0xFFFFFFFF
+						hashes[j] = (hashes[j] * seeds[j] + message[i]) & 255
 					}
 				}
 				return hashes
