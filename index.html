@@ -441,8 +441,6 @@
 							}
 							ctx.fillText(textWatermark, 0, img.height - 25)
 							
-							document.body.appendChild(canvas)
-							
 							canvas.toBlob(blob => {
 								URL.revokeObjectURL(img.src)
 								
