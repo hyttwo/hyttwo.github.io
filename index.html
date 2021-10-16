@@ -45,7 +45,7 @@
 			<div class="flex">
 				<section>
 					<h2>表图</h2>
-					<input type="file" multiple id="outerImagesInput" autocomplete="off">
+					<input type="file" multiple id="outerImagesInput" autocomplete="off" accept="image/*">
 				</section>
 				<section>
 					<h2>里文件</h2>
@@ -100,7 +100,7 @@
 			<div class="flex">
 				<section>
 					<h2>密图</h2>
-					<input type="file" multiple id="cipheredImagesInput" autocomplete="off">
+					<input type="file" multiple id="cipheredImagesInput" autocomplete="off" accept="image/png">
 				</section>
 				<section>
 					<h2>解密</h2>
@@ -420,11 +420,15 @@
 				var timesLimit = document.getElementById('timesLimit').value
 				
 				new Promise((resolve, reject) => {
-					for (var i of images) {
+					for (let i of images) {
 						var img = document.createElement('img')
-						img.src = URL.createObjectURL(i)
 						
 						img.onload = () => {
+							if (!img.complete) {
+								setTimeout(img.onload, 1)
+								return
+							}
+							
 							var canvas = document.createElement('canvas')
 							canvas.width = img.width
 							canvas.height = img.height
@@ -437,7 +441,11 @@
 							}
 							ctx.fillText(textWatermark, 0, img.height - 25)
 							
+							document.body.appendChild(canvas)
+							
 							canvas.toBlob(blob => {
+								URL.revokeObjectURL(img.src)
+								
 								blob.arrayBuffer().then(buffer => {
 									var true_limit = hasTimesLimit ? Math.min(buffer.byteLength * (timesLimit - 1) - 16, lessThan) : lessThan
 									if (true_limit <= 0) {
@@ -458,6 +466,8 @@
 						img.onerror = () => {
 							reject('图片读取错误')
 						}
+						
+						img.src = URL.createObjectURL(i)
 					}
 				}).then(() => {
 					var reader = new FileReader()
@@ -507,6 +517,7 @@
 							var raw_name = images[results[i].id].name
 							a.download = raw_name.substring(0, raw_name.lastIndexOf('.') - 1) + i + '.png'
 							a.click()
+							URL.revokeObjectURL(a.href)
 						}
 						
 						mask.hide()
@@ -567,6 +578,7 @@
 							type: new TextDecoder().decode(new Uint8Array(translated.buffer, 4, mime_size))
 						}))
 						a.click()
+						URL.revokeObjectURL(a.href)
 					} catch(e) {
 						alert('密码错误')
 					}
