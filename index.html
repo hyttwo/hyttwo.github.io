@@ -41,15 +41,15 @@
 	<div class="flex">
 		<details open>
 			<summary>编码</summary>
-			<button id="startEncode">开始编码</button>
+			<button onclick="startEncode()">开始编码</button>
 			<div class="flex">
 				<section>
 					<h2>表图</h2>
-					<input type="file" multiple id="outerImagesInput" autocomplete="off" accept="image/*">
+					<input type="file" multiple id="outerImagesInput" accept="image/*">
 				</section>
 				<section>
 					<h2>里文件</h2>
-					<input type="file" id="innerFileInput" autocomplete="off">
+					<input type="file" id="innerFileInput">
 				</section>
 				<section>
 					<h2>加密</h2>
@@ -60,7 +60,7 @@
 					<div>
 						<input type="checkbox" id="iconWatermarkCheck" checked>
 						<label for="iconWatermarkCheck">右上角图标</label>
-						<img id="hyttIco" src="data:image/ico;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwJW+XgyqCtAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9FDxTx0HF/z8UPlYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcyZynZMwkcoAAAAAAAAAAAAAAAAAAAAATRpManQlc58AAAAAAAAAAAAAAAAAAAAAPhQ+Vn0oe6wAAAAAAAAAAG0kbZaSMZLLAAAAAAAAAAAAAAAAAAAAACUMJTQ5EzhOAAAAAAAAAAAAAAAAAAAAAB8KHys+FD5VAAAAAAAAAABJGElksTmv8wQBBAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAgYIcNAwP88FDtUAAAAAE0ZTGkKAwoOAAAAACkOKTkIAwgKAAAAABQHFBs7EzpQAAAAACAKHyxDFkJcAAAAAAAAAABrI2mTwD+++zcSNky4Pbb+RBZEXhwJGyfBP77/GwkbJgAAAAArDis7y0LJ/x4KHSp1JnOgmzOZ1AAAAAAAAAAAAgECAoAqf6pmIWSLZiFkjKE1oNyLLoi6kjCQyAEAAQEAAAAAAAAAAIotiLyjNqLasTqw8k4aTWsAAAAAAAAAAAAAAAAAAAAAAAAAAA8FDxW3O7X41UbS/y0PLT4AAAAAAAAAAAAAAAAZCBkiw0DB/6Y2peMJAwkNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALQ8tP00ZTGoAAAAAAAAAAAAAAAAAAAAAAAAAACUMJTQXCBcgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AACf/wAAH/8AADzzAAA88wAAH/8AABJJAACAQQAAgGEAAPDhAAD58wAA//8AAP//AAD//wAA//8AAA==">
+						<img id="hyttIco" src="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwJW+XgyqCtAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9FDxTx0HF/z8UPlYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcyZynZMwkcoAAAAAAAAAAAAAAAAAAAAATRpManQlc58AAAAAAAAAAAAAAAAAAAAAPhQ+Vn0oe6wAAAAAAAAAAG0kbZaSMZLLAAAAAAAAAAAAAAAAAAAAACUMJTQ5EzhOAAAAAAAAAAAAAAAAAAAAAB8KHys+FD5VAAAAAAAAAABJGElksTmv8wQBBAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAgYIcNAwP88FDtUAAAAAE0ZTGkKAwoOAAAAACkOKTkIAwgKAAAAABQHFBs7EzpQAAAAACAKHyxDFkJcAAAAAAAAAABrI2mTwD+++zcSNky4Pbb+RBZEXhwJGyfBP77/GwkbJgAAAAArDis7y0LJ/x4KHSp1JnOgmzOZ1AAAAAAAAAAAAgECAoAqf6pmIWSLZiFkjKE1oNyLLoi6kjCQyAEAAQEAAAAAAAAAAIotiLyjNqLasTqw8k4aTWsAAAAAAAAAAAAAAAAAAAAAAAAAAA8FDxW3O7X41UbS/y0PLT4AAAAAAAAAAAAAAAAZCBkiw0DB/6Y2peMJAwkNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALQ8tP00ZTGoAAAAAAAAAAAAAAAAAAAAAAAAAACUMJTQXCBcgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AACf/wAAH/8AADzzAAA88wAAH/8AABJJAACAQQAAgGEAAPDhAAD58wAA//8AAP//AAD//wAA//8AAA==">
 					</div>
 					<div>
 						<input id="textWatermark" placeholder="左下角文字">
@@ -96,11 +96,11 @@
 		</details>
 		<details open>
 			<summary>解码</summary>
-			<button id="startDecode">开始解码</button>
+			<button onclick="startDecode()">开始解码</button>
 			<div class="flex">
 				<section>
 					<h2>密图</h2>
-					<input type="file" multiple id="cipheredImagesInput" autocomplete="off" accept="image/png">
+					<input type="file" multiple id="cipheredImagesInput" accept="image/png">
 				</section>
 				<section>
 					<h2>解密</h2>
@@ -128,24 +128,18 @@
 		}
 	</script>
 	<script>
-	// 逻辑左移/右移
-		function ROTL(a, b) {
-			return (a << b) | (a >> (32 - b))
-		}
-		function ROTR(a, b) {
-			return (a >> b) | (a << (32 - b))
-		}
-	</script>
-	<script>
 	// ChaCha20（用于数据加解密） 见https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant
 		(function() {
+			function ROTL(a, b) {
+				return (a << b) | (a >> (32 - b))
+			}
 			function QR(x, a, b, c, d) {
 				x[a] += x[b], x[d] = ROTL(x[d] ^ x[a], 16)
 				x[c] += x[d], x[b] = ROTL(x[b] ^ x[c], 12)
 				x[a] += x[b], x[d] = ROTL(x[d] ^ x[a], 8)
 				x[c] += x[d], x[b] = ROTL(x[b] ^ x[c], 7)
 			}
-			ChaCha20 = function(key/*32字节*/, nonce/*12字节*/, data, result/*长度与data相同*/) {
+			ChaCha20 = function(key/*Uint32Array[8]*/, nonce/*Uint32Array[3]*/, data) {
 				var data_size = data.length
 				
 				var in_ = new Uint32Array(16)
@@ -153,18 +147,18 @@
 				in_[1] = 857760878
 				in_[2] = 2036477234
 				in_[3] = 1797285236
-				in_[4] = fourBytesToUint32(key, 0)
-				in_[5] = fourBytesToUint32(key, 4)
-				in_[6] = fourBytesToUint32(key, 8)
-				in_[7] = fourBytesToUint32(key, 12)
-				in_[8] = fourBytesToUint32(key, 16)
-				in_[9] = fourBytesToUint32(key, 20)
-				in_[10] = fourBytesToUint32(key, 24)
-				in_[11] = fourBytesToUint32(key, 28)
+				in_[4] = key[0]
+				in_[5] = key[1]
+				in_[6] = key[2]
+				in_[7] = key[3]
+				in_[8] = key[4]
+				in_[9] = key[5]
+				in_[10] = key[6]
+				in_[11] = key[7]
 				in_[12] = 0 // counter
-				in_[13] = fourBytesToUint32(nonce, 0)
-				in_[14] = fourBytesToUint32(nonce, 4)
-				in_[15] = fourBytesToUint32(nonce, 8)
+				in_[13] = nonce[0]
+				in_[14] = nonce[1]
+				in_[15] = nonce[2]
 				
 				var x = new Uint32Array(16)
 				var out = new Uint8Array(64)
@@ -192,12 +186,12 @@
 					
 					if (data_size - j <= 64) {
 						for (var i = 0; j < data_size; ++ i, ++ j) {
-							result[j] = data[j] ^ out[i]
+							data[j] ^= out[i]
 						}
 						return
 					}
 					for (var i = 0; i < 64; ++ i, ++ j) {
-						result[j] = data[j] ^ out[i]
+						data[j] ^= out[i]
 					}
 					
 					++ in_[12] // counter ++
@@ -207,31 +201,24 @@
 	</script>
 	<script>
 		(function() {
-			var seeds = new Uint8Array(32)
-			for (var j = 0; j < 32; ++ j) {
-				seeds[j] = (j << 1) + 23
-			}
-			hash = function(message) {
-				var hashes = new Uint8Array(32)
+			var t = new TextEncoder().encode('幻隐图two')
+			var nonce = new Uint32Array([fourBytesToUint32(t, 0), fourBytesToUint32(t, 4), fourBytesToUint32(t, 8)])
+			var seeds = new Uint32Array([13, 131, 1313, 13131, 131313, 1313131, 13131313, 131313131])
+			translate = function(textkey, data) {
+				if (textkey.length == 0) {
+					return
+				}
+				var message = new TextEncoder().encode(textkey)
+				var hashes = new Uint32Array(8)
 				for (var i = 0; i < message.length; ++ i) {
-					for (var j = 0; j < 32; ++ j) {
-						hashes[j] = (hashes[j] * seeds[j] + message[i]) & 255
+					for (var j = 0; j < 8; ++ j) {
+						hashes[j] = (hashes[j] * seeds[j] + message[i]) % 0xFFFFFFFF
 					}
 				}
-				return hashes
+				ChaCha20(hashes, nonce, data)
 			}
 		})()
 	</script>
-	<script>
-	// 加解密
-		(function() {
-			var nonce = new TextEncoder().encode('幻隐图two')
-			translate = function(textkey, data, result) {
-				ChaCha20(hash(new TextEncoder().encode(textkey)), nonce, data, result)
-			}
-		})()
-	</script>
-	
 	<script>
 	// CRC32（用于png块的校验） 见https://en.wikipedia.org/wiki/Cyclic_redundancy_check#CRC-32_algorithm
 		(function() {
@@ -245,349 +232,344 @@
 			}
 		})()
 	</script>
-	<script>
-	// 幻隐图two核心代码
-		(function () {
-			function chunk_name_is(png, p, chunk_name) {
-				return png[p + 4] == chunk_name.charCodeAt(0) && png[p + 5] == chunk_name.charCodeAt(1) && png[p + 6] == chunk_name.charCodeAt(2) && png[p + 7] == chunk_name.charCodeAt(3)
-			}
-			function find_end_of_last_chunk(png, chunk_name) {
-				var p = 8
-				var f
-				while (p < png.length) {
-					if (chunk_name_is(png, p, chunk_name)) {
-						f = p
-					}
-					p += fourBytesToUint32(png, p) + 12
-				}
-				return f + fourBytesToUint32(png, f) + 12
-			}
-			function write_chunk_name(png, p, chunk_name) {
-				png[p] = chunk_name.charCodeAt(0)
-				png[p + 1] = chunk_name.charCodeAt(1)
-				png[p + 2] = chunk_name.charCodeAt(2)
-				png[p + 3] = chunk_name.charCodeAt(3)
-			}
-			hytt = {
-				encode: function(pngs, data, smaller) {
-					var results = []
-					var i = 0, j = 0
-
-					while (i < data.length) {
-						var png_id = Math.floor(Math.random() * pngs.length)
-						var cur_png = pngs[png_id]
-						var png = cur_png.png
-						
-						var cur_data_size = cur_png.limit
-						if (i + cur_data_size <= data.length) {
-							cur_data_size = smaller(cur_data_size)
-						}
-						cur_data_size = Math.min(cur_data_size, data.length - i)
-						
-						var result = new Uint8Array(cur_data_size + png.length + 16)
-						
-						var p = find_end_of_last_chunk(png, 'IDAT')
-						
-						// 结果图为 png.substr(0, p) + png块长度(4 字节) + png块名(4 字节) + j(4 字节) + 数据块 + crc32(4 字节) + png.substr(p)
-						
-						for (var k = 0; k < p; ++ k) {
-							result[k] = png[k]
-						}
-						
-						var chunk_size = cur_data_size + 4
-						Uint32ToFourBytes(result, p, chunk_size)
-						
-						write_chunk_name(result, p + 4, 'zTXt')
-						
-						Uint32ToFourBytes(result, p + 8, j)
-						
-						for (var k = 0; k < cur_data_size; ++ k) {
-							result[p + 12 + k] = data[i + k]
-						}
-						
-						Uint32ToFourBytes(result, p + 12 + cur_data_size, CRC32(new Uint8Array(result.buffer, p + 8)))
-						
-						while (p < png.length) {
-							result[p + 16 + cur_data_size] = png[p]
-							++ p
-						}
-						
-						i += cur_data_size
-						++ j
-						
-						results.push({
-							png: result,
-							id: png_id
-						})
-					}
-					return results
-				},
-				decode: function(pngs) {
-					var result_indexes = {}
-					var size = 0
-					
-					var result_size = 0
-					var result_num = 0
-					var records = new Array(pngs.length)
-					
-					for (var j = 0; j < pngs.length; ++ j) {
-						var png = pngs[j]
-						var p = find_end_of_last_chunk(png, 'IDAT')
-						if (!p || !chunk_name_is(png, p, 'zTXt')) {
-							return
-						}
-						
-						var data_size = fourBytesToUint32(png, p) - 4
-						var id = fourBytesToUint32(png, p + 8)
-						
-						records[j] = {
-							data_size: data_size,
-							p: p
-						}
-						
-						result_indexes[id] = j
-						if (id >= result_num) {
-							result_num = id + 1
-						}
-						result_size += data_size
-						++ size
-					}
-					
-					if (result_num != size || result_num != pngs.length) {
-						return
-					}
-					
-					var final_result = new Uint8Array(result_size)
-					var offset = 0
-					for (var i = 0; i < result_num; ++ i) {
-						var j = result_indexes[i]
-						var rc = records[j]
-						for (var k = 0; k < rc.data_size; ++ k) {
-							final_result[offset + k] = pngs[j][rc.p + 12 + k]
-						}
-						offset += rc.data_size
-					}
-					
-					return final_result
-				}
-			}
-		})()
-	</script>
 	
 	<script>
-		(function() {
-			var c = document.querySelector('.mask'), d = document.getElementById('maskContent')
-			mask = {
-				show: function(text) {
-					d.innerText = text
-					c.style.display = 'block'
-				},
-				hide: function() {
-					c.style.display = 'none'
-				}					
+		mask = {
+			show: function(text) {
+				document.getElementById('maskContent').innerText = text
+				document.querySelector('.mask').style.display = 'block'
+			},
+			hide: function() {
+				document.querySelector('.mask').style.display = 'none'
 			}
-		})()
-	</script>
-	<script>
-		(function() {
-			var hyttIco = document.getElementById('hyttIco')
-			document.getElementById('startEncode').onclick = function() {
-				var images = document.getElementById('outerImagesInput').files
-				if (images.length == 0) {
-					alert('请选择至少一张表图')
+		}
+		function chunk_name_is(png, p, chunk_name) {
+			return png[p + 4] == chunk_name.charCodeAt(0) && png[p + 5] == chunk_name.charCodeAt(1) && png[p + 6] == chunk_name.charCodeAt(2) && png[p + 7] == chunk_name.charCodeAt(3)
+		}
+		function find_end_of_last_chunk(png, chunk_name) {
+			var p = 8
+			var f
+			while (p < png.length) {
+				if (chunk_name_is(png, p, chunk_name)) {
+					f = p
+				}
+				p += fourBytesToUint32(png, p) + 12
+			}
+			return f + fourBytesToUint32(png, f) + 12
+		}
+		function write_chunk_name(png, p, chunk_name) {
+			png[p] = chunk_name.charCodeAt(0)
+			png[p + 1] = chunk_name.charCodeAt(1)
+			png[p + 2] = chunk_name.charCodeAt(2)
+			png[p + 3] = chunk_name.charCodeAt(3)
+		}
+		function smaller(x, k) {
+			var m = 10
+			for (var i = 0; i < smaller; ++ i) {
+				m = Math.min(m, Math.floor(Math.random() * 10))
+			}
+			var k = 0
+			for (var i = 0; i < m; ++ i) {
+				k = Math.max(k, Math.floor(Math.random() * x))
+			}
+			return k + 1
+		}
+		function readImg(src) {
+			return new Promise((resolve, reject) => {
+				var img = document.createElement('img')
+				img.onload = e => {
+					resolve(e.target)
+				}
+				img.onerror = () => {
+					reject('图片读取失败')
+				}
+				img.src = src
+			})
+		}
+		function readFile(file) {
+			return new Promise((resolve, reject) => {
+				var reader = new FileReader()
+				reader.onload = e => {
+					resolve(e.target.result)
+				}
+				reader.onerror = () => {
+					reject('文件读取失败')
+				}
+				reader.readAsArrayBuffer(file)
+			})
+		}
+		async function startEncode() {
+			var images = document.getElementById('outerImagesInput').files
+			if (images.length == 0) {
+				alert('请选择至少一张表图')
+				return
+			}
+			
+			var files = document.getElementById('innerFileInput').files
+			if (files.length == 0) {
+				alert('请选择一个里文件')
+				return
+			}
+			var file = files[0]
+			files = null
+			var mime = new TextEncoder().encode(file.type)
+			var name = new TextEncoder().encode(file.name)
+			
+			mask.show('正在编码')
+			
+			var pngs = []
+			
+			var hasIconWatermark = document.getElementById('iconWatermarkCheck').checked
+			var textWatermark = document.getElementById('textWatermark').value
+			
+			var lessThan = 4294967279
+			if (document.getElementById('lessThanCheck').checked) {
+				lessThan = Math.min(document.getElementById('lessThan').value * document.getElementById('lessThanBase').value, lessThan)
+			}
+			var hasTimesLimit = document.getElementById('hasTimesLimit').checked
+			var timesLimit = document.getElementById('timesLimit').value
+			
+			for (var i = 0; i < images.length; ++ i) {
+				var url = URL.createObjectURL(images[i])
+				var img = await readImg(url).catch(e => {
+					URL.revokeObjectURL(url)
+					alert(e)
+					mask.hide()
+				})
+				if (!img) {
 					return
 				}
 				
-				var files = document.getElementById('innerFileInput').files
-				if (files.length == 0) {
-					alert('请选择一个里文件')
-					return
+				URL.revokeObjectURL(url)
+				url = null
+				
+				var canvas = document.createElement('canvas')
+				canvas.width = img.width
+				canvas.height = img.height
+				var ctx = canvas.getContext('2d')
+							
+				ctx.drawImage(img, 0, 0)
+				
+				if (hasIconWatermark) {
+					ctx.drawImage(hyttIco, img.width - hyttIco.width, 0)
 				}
-				var file = files[0]
+				ctx.fillText(textWatermark, 0, img.height - 25)
 				
-				mask.show('正在编码')
+				img = null
 				
-				var pngs = []
-				
-				var hasIconWatermark = document.getElementById('iconWatermarkCheck').checked
-				var textWatermark = document.getElementById('textWatermark').value
-				
-				var lessThan = 4294967279
-				if (document.getElementById('lessThanCheck').checked) {
-					lessThan = Math.min(document.getElementById('lessThan').value * document.getElementById('lessThanBase').value, lessThan)
-				}
-				var hasTimesLimit = document.getElementById('hasTimesLimit').checked
-				var timesLimit = document.getElementById('timesLimit').value
-				
-				new Promise((resolve, reject) => {
-					for (let i of images) {
-						var img = document.createElement('img')
-						
-						img.onload = () => {
-							if (!img.complete) {
-								setTimeout(img.onload, 1)
-								return
-							}
-							
-							var canvas = document.createElement('canvas')
-							canvas.width = img.width
-							canvas.height = img.height
-							var ctx = canvas.getContext('2d')
-										
-							ctx.drawImage(img, 0, 0)
-							
-							if (hasIconWatermark) {
-								ctx.drawImage(hyttIco, img.width - hyttIco.width, 0)
-							}
-							ctx.fillText(textWatermark, 0, img.height - 25)
-							
-							canvas.toBlob(blob => {
-								URL.revokeObjectURL(img.src)
-								
-								blob.arrayBuffer().then(buffer => {
-									var true_limit = hasTimesLimit ? Math.min(buffer.byteLength * (timesLimit - 1) - 16, lessThan) : lessThan
-									if (true_limit <= 0) {
-										reject('限制太过以至于存在无法写入里数据的表图')
-										return
-									}
-									pngs.push({
-										png: new Uint8Array(buffer),
-										limit: true_limit
-									})
-									if (pngs.length == images.length) {
-										resolve()
-									}
-								})
-							})
-						}
-						
-						img.onerror = () => {
-							reject('图片读取错误')
-						}
-						
-						img.src = URL.createObjectURL(i)
-					}
-				}).then(() => {
-					var reader = new FileReader()
-					reader.onload = e => {
-						var content = new Uint8Array(e.target.result)
-						var mime = new TextEncoder().encode(file.type)
-						var name = new TextEncoder().encode(file.name)
-						
-						// mime-size(4字节) + mime + name-size(4字节) + name + ar
-						var data = new Uint8Array(8 + mime.length + name.length + content.length)
-						
-						Uint32ToFourBytes(data, 0, mime.length)
-						for (var j = 0; j < mime.length; ++ j) {
-							data[4 + j] = mime[j]
-						}
-						
-						Uint32ToFourBytes(data, 4 + mime.length, name.length)
-						for (var j = 0; j < name.length; ++ j) {
-							data[8 + mime.length + j] = name[j]
-						}
-						
-						for (var j = 0; j < content.length; ++ j) {
-							data[8 + mime.length + name.length + j] = content[j]
-						}
-						
-						var translated = new Uint8Array(8 + mime.length + name.length + content.length)
-						translate(document.getElementById('encodekey').value, data, translated)
-						
-						var smallerRange = document.getElementById('smaller')
-						var smaller = Math.floor(smallerRange.value / Number(smallerRange.max)) * 10
-						
-						var results = hytt.encode(pngs, translated, x => {
-							var m = 10
-							for (var i = 0; i < smaller; ++ i) {
-								m = Math.min(m, Math.floor(Math.random() * 10))
-							}
-							var k = 0
-							for (var i = 0; i < m; ++ i) {
-								k = Math.max(k, Math.floor(Math.random() * x))
-							}
-							return k + 1
+				var buffer = await new Promise(resolve => {
+					canvas.toBlob(blob => {
+						blob.arrayBuffer().then(buffer => {
+							resolve(buffer)
 						})
-							
-						var a = document.createElement('a')
-						for (var i in results) {
-							a.href = URL.createObjectURL(new Blob([results[i].png], {type: "image/png"}))
-							var raw_name = images[results[i].id].name
-							a.download = raw_name.substring(0, raw_name.lastIndexOf('.') - 1) + i + '.png'
-							a.click()
-							URL.revokeObjectURL(a.href)
-						}
-						
-						mask.hide()
-					}
-					reader.onerror = () => {
-						alert('文件读取错误')
-						mask.hide()
-						return
-					}
-					reader.readAsArrayBuffer(file)
-				}, e => {
-					alert(e)
-					mask.hide()
+					})
 				})
-			}
-			document.getElementById('startDecode').onclick = () => {
-				var images = document.getElementById('cipheredImagesInput').files
-				if (images.length == 0) {
-					alert('请选择密图')
+				
+				var true_limit = hasTimesLimit ? Math.min(buffer.byteLength * (timesLimit - 1) - 16, lessThan) : lessThan
+				if (true_limit <= 0) {
+					alert('限制太过以至于存在无法写入里数据的表图')
+					mask.hide()
 					return
 				}
 				
-				mask.show('正在解码')
+				pngs.push({
+					png: new Uint8Array(buffer),
+					limit: true_limit,
+					name: images[i].name
+				})
+			}
+			
+			images = null
+			
+			var buffer = await readFile(file).catch(e => {
+				alert(e)
+				mask.hide()
+			})
+			if (!buffer) {
+				return
+			}
+			
+			file = null
+			
+			var content = new Uint8Array(buffer)
+			
+			// mime-size(4字节) + mime + name-size(4字节) + name + ar
+			var data = new Uint8Array(8 + mime.length + name.length + content.length)
+			
+			Uint32ToFourBytes(data, 0, mime.length)
+			for (var j = 0; j < mime.length; ++ j) {
+				data[4 + j] = mime[j]
+			}
+			
+			Uint32ToFourBytes(data, 4 + mime.length, name.length)
+			for (var j = 0; j < name.length; ++ j) {
+				data[8 + mime.length + j] = name[j]
+			}
+			
+			for (var j = 0; j < content.length; ++ j) {
+				data[8 + mime.length + name.length + j] = content[j]
+			}
+			
+			buffer = null
+			content = null
+			
+			translate(document.getElementById('encodekey').value, data)
+			
+			var smallerk = Math.floor(document.getElementById('smaller').value / Number(document.getElementById('smaller').max)) * 10
+			
+			var i = 0, j = 0
+			var a = document.createElement('a')
 				
-				var pngs = []
-				new Promise((resolve, reject) => {
-					for (var i of images) {
-						var reader = new FileReader()
-						reader.onload = e => {
-							pngs.push(new Uint8Array(e.target.result))
-							if (pngs.length == images.length) {
-								resolve()
-							}
-						}
-						reader.onerror = () => {
-							reject('文件读取错误')
-						}
-						reader.readAsArrayBuffer(i)
-					}
-				}).then(() => {
-					var result = hytt.decode(pngs)
-					if (!result) {
-						alert('密图错误')
-						mask.hide()
-						return
-					}
-					
-					var translated = new Uint8Array(result.length)
-					translate(document.getElementById('decodekey').value, result, translated)
-					
-					try {
-						var mime_size = fourBytesToUint32(translated, 0)
-						var name_size = fourBytesToUint32(translated, 4 + mime_size)
-						
-						var a = document.createElement('a')
-						a.download = new TextDecoder().decode(new Uint8Array(translated.buffer, 8 + mime_size, name_size))
-						a.href = URL.createObjectURL(new Blob([new Uint8Array(translated.buffer, 8 + mime_size + name_size)], {
-							type: new TextDecoder().decode(new Uint8Array(translated.buffer, 4, mime_size))
-						}))
-						a.click()
-						URL.revokeObjectURL(a.href)
-					} catch(e) {
-						alert('密码错误')
-					}
-					
-					mask.hide()
-				}, e => {
+			while (i < data.length) {
+				var png_id = Math.floor(Math.random() * pngs.length)
+				var cur_png = pngs[png_id]
+				var png = cur_png.png
+				
+				var cur_data_size = cur_png.limit
+				if (i + cur_data_size <= data.length) {
+					cur_data_size = smaller(cur_data_size, smallerk)
+				}
+				cur_data_size = Math.min(cur_data_size, data.length - i)
+				
+				var result = new Uint8Array(cur_data_size + png.length + 16)
+				
+				var p = find_end_of_last_chunk(png, 'IDAT')
+				
+				// 结果图为 png.substr(0, p) + png块长度(4 字节) + png块名(4 字节) + j(4 字节) + 数据块 + crc32(4 字节) + png.substr(p)
+				
+				for (var k = 0; k < p; ++ k) {
+					result[k] = png[k]
+				}
+				
+				var chunk_size = cur_data_size + 4
+				Uint32ToFourBytes(result, p, chunk_size)
+				
+				write_chunk_name(result, p + 4, 'zTXt')
+				
+				Uint32ToFourBytes(result, p + 8, j)
+				
+				for (var k = 0; k < cur_data_size; ++ k) {
+					result[p + 12 + k] = data[i + k]
+				}
+				
+				Uint32ToFourBytes(result, p + 12 + cur_data_size, CRC32(new Uint8Array(result.buffer, p + 8)))
+				
+				while (p < png.length) {
+					result[p + 16 + cur_data_size] = png[p]
+					++ p
+				}
+				
+				var url = URL.createObjectURL(new Blob([result]), {type: 'image/png'})
+				a.href = url
+				a.download = pngs[png_id].name.substring(0, pngs[png_id].name.lastIndexOf('.') - 1) + j + '.png'
+				
+				a.onclick = () => {
+					setTimeout(() => {
+						URL.revokeObjectURL(url)
+					}, 0)
+				}
+				a.click()
+				
+				i += cur_data_size
+				++ j
+			}
+			
+			mask.hide()
+		}
+		async function startDecode() {
+			var images = document.getElementById('cipheredImagesInput').files
+			if (images.length == 0) {
+				alert('请选择密图')
+				return
+			}
+			
+			mask.show('正在解码')
+			
+			var pngs = []
+			for (var i = 0; i < images.length; ++ i) {
+				var buffer = await readFile(images[i]).catch(e => {
 					alert(e)
 					mask.hide()
 				})
+				if (!buffer) {
+					return
+				}
+				
+				pngs.push(new Uint8Array(buffer))
 			}
-		})()
+			
+			var result_indexes = {}
+			var size = 0
+			
+			var result_size = 0
+			var result_num = 0
+			var records = new Array(pngs.length)
+			
+			for (var j = 0; j < pngs.length; ++ j) {
+				var png = pngs[j]
+				var p = find_end_of_last_chunk(png, 'IDAT')
+				if (!p || !chunk_name_is(png, p, 'zTXt')) {
+					return
+				}
+				
+				var data_size = fourBytesToUint32(png, p) - 4
+				var id = fourBytesToUint32(png, p + 8)
+				
+				records[j] = {
+					data_size: data_size,
+					p: p
+				}
+				
+				result_indexes[id] = j
+				if (id >= result_num) {
+					result_num = id + 1
+				}
+				result_size += data_size
+				++ size
+			}
+			
+			if (result_num != size || result_num != pngs.length) {
+				return
+			}
+			
+			var final_result = new Uint8Array(result_size)
+			var offset = 0
+			for (var i = 0; i < result_num; ++ i) {
+				var j = result_indexes[i]
+				var rc = records[j]
+				for (var k = 0; k < rc.data_size; ++ k) {
+					final_result[offset + k] = pngs[j][rc.p + 12 + k]
+				}
+				offset += rc.data_size
+			}
+			
+			pngs = null
+			
+			translate(document.getElementById('decodekey').value, final_result)
+			
+			try {
+				var mime_size = fourBytesToUint32(final_result, 0)
+				var name_size = fourBytesToUint32(final_result, 4 + mime_size)
+				
+				var url = URL.createObjectURL(new Blob([new Uint8Array(final_result.buffer, 8 + mime_size + name_size)], {
+					type: new TextDecoder().decode(new Uint8Array(final_result.buffer, 4, mime_size))
+				}))
+				
+				var a = document.createElement('a')
+				a.download = new TextDecoder().decode(new Uint8Array(final_result.buffer, 8 + mime_size, name_size))
+				a.href = url
+				a.onclick = () => {
+					setTimeout(() => {
+						URL.revokeObjectURL(url)
+					}, 0)
+				}
+				a.click()
+			} catch(e) {
+				alert('密码错误')
+			}
+			
+			mask.hide()
+		}
 	</script>
 </body>
 </html>
