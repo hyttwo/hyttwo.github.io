@@ -497,7 +497,6 @@
 				
 				pngs.push(new Uint8Array(buffer))
 			}
-			console.log(1)
 			
 			var result_indexes = {}
 			var size = 0
@@ -510,6 +509,8 @@
 				var png = pngs[j]
 				var p = find_end_of_last_chunk(png, 'IDAT')
 				if (!p || !chunk_name_is(png, p, 'zTXt')) {
+					alert('密图错误')
+					mask.hide()
 					return
 				}
 				
@@ -528,9 +529,10 @@
 				result_size += data_size
 				++ size
 			}
-			console.log(2)
 			
 			if (result_num != size || result_num != pngs.length) {
+				alert('密图错误')
+				mask.hide()
 				return
 			}
 			
@@ -545,7 +547,6 @@
 				offset += rc.data_size
 			}
 			
-			console.log(3)
 			pngs = null
 			
 			translate(document.getElementById('decodekey').value, final_result)
@@ -570,7 +571,6 @@
 			} catch(e) {
 				alert('密码错误')
 			}
-			console.log(4)
 			
 			mask.hide()
 		}
