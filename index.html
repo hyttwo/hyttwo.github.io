@@ -332,10 +332,10 @@
 			for (var i = 0; i < images.length; ++ i) {
 				var url = URL.createObjectURL(images[i])
 				var img = await readImg(url).catch(e => {
-					URL.revokeObjectURL(url)
 					alert(e)
 					mask.hide()
 				})
+				URL.revokeObjectURL(url)
 				if (!img) {
 					return
 				}
@@ -452,7 +452,7 @@
 					result[p + 12 + k] = data[i + k]
 				}
 				
-				Uint32ToFourBytes(result, p + 12 + cur_data_size, CRC32(new Uint8Array(result.buffer, p + 8)))
+				Uint32ToFourBytes(result, p + 12 + cur_data_size, CRC32(new Uint8Array(result.buffer, p + 8, chunk_size)))
 				
 				while (p < png.length) {
 					result[p + 16 + cur_data_size] = png[p]
