@@ -61,12 +61,6 @@ class hyt2_core {
         return c;
     }
 
-    _encodePng(png, data) {
-        const p = __hyt2_find_png_clap(png);
-        if (!p) return;
-        return this._encode(png.subarray(0, p), png.subarray(p), data);
-    }
-
     _decodePng(png) {
         const p = __hyt2_find_png_clap(png);
         if (!p) return;
