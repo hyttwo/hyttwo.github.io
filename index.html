@@ -73,9 +73,7 @@ class hyt2_core {
 
         const e = __hyt2_make_DataView(png);
         if (e.getUint32(p + 4) !== this.magicNumber) return; // chunk name
-        const data = png.subarray(p + 8, p + 8 + e.getUint32(p)); // chunk data
-
-        return data;
+        return png.subarray(p + 8, p + 8 + e.getUint32(p));
     }
 
     _crc(data) {
