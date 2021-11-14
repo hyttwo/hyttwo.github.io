@@ -51,8 +51,8 @@ class hyt2_core {
 
         a.set(left); // left of png
 
-        e.setUint32(left.length + 4, this.magicNumber); // chunk name
         e.setUint32(left.length, data.length); // chunk length
+        e.setUint32(left.length + 4, this.magicNumber); // chunk name
         a.set(data, left.length + 8); // chunk data
         e.setInt32(left.length + 8 + data.length, this._crc(data)); // chunk crc
 
